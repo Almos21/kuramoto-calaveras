@@ -43,13 +43,21 @@ const CONFIG = {
 
   // ---------- MODELO DE KURAMOTO ----------
   kuramoto: {
-    K: 1.6,                 // fuerza de acoplamiento global (K en la fórmula dθ/dt = ω + (K/N)Σsin(θj-θi))
+    K: 1.6,                 // fuerza de acoplamiento global BASE (K en la fórmula dθ/dt = ω + (K/N)Σsin(θj-θi))
     singerWeightMult: 4.0,  // cuánto más pesa el valor de la cantante θ_j cuando aparece en la ecuación de OTROS
     distanceFalloff: 700,   // px (en el canvas ya escalado). Mayor = el acoplamiento por distancia decae más lento.
                              // Nota: al cambiar "scale" cambia el tamaño real del canvas, así que si el efecto
                              // de "cercanía" se siente muy fuerte o muy débil, ajusta este valor.
     scarePerturbMin: Math.PI * 0.9,  // al asustar un cráneo (clic), cuánto se perturba su fase como mínimo
     scarePerturbMax: Math.PI * 2.0,  // y como máximo (empuja al cráneo de vuelta a un estado caótico)
+
+    // K dinámico: cada susto resta de golpe al K global (no solo perturba
+    // la fase de esa calavera), y se recupera solo con el tiempo.
+    // K_efectivo(t) = max(scareKMin, K - kDeficit(t)), donde kDeficit decae
+    // exponencialmente: kDeficit(t+dt) = kDeficit(t) * e^(-dt/scareKRecoveryTau)
+    scareKDrop: 0.6,          // cuánto le resta a K cada vez que asustas una calavera
+    scareKRecoveryTau: 3.0,   // segundos que tarda en recuperarse (más alto = recuperación más lenta)
+    scareKMin: 0.2,           // piso mínimo, K nunca cae más abajo de esto
   },
 
   // ---------- CANTANTE (rige el tiempo) ----------
@@ -59,7 +67,7 @@ const CONFIG = {
     omegaMin: 0.15,
     omegaMax: 4.0,
     pos: { x: 1920, y: 1080 }, // posición lógica (para distancias), EN COORDENADAS DE 4K
-    collider: { x: 1678, y: 552, w: 742, h: 1160 }, // EDITA esto para calzar tu sprite, EN COORDENADAS DE 4K
+    collider: { x: 1680, y: 630, w: 480, h: 1260 }, // EDITA esto para calzar tu sprite, EN COORDENADAS DE 4K
     images: {
       quieta:   'assets/singer_quieta.PNG',
       cantando: 'assets/singer_cantando.PNG',
@@ -72,7 +80,7 @@ const CONFIG = {
   // para calcular distancias (acoplamiento más fuerte entre vecinos cercanos).
   // "collider" = caja de detección de clic, EDITA x/y/w/h para calzar tu arte.
   // Todos los valores están en coordenadas de 4K (3840x2160), igual que tus sprites.
-  skulls: [
+skulls: [
     { id: 0, pos: { x: 360, y: 900 }, collider: { x: 2726, y: 46, w: 402, h: 408 },
       omegaBase: 0.75,
       images: { normal: 'assets/skull0_normal.PNG', peck: 'assets/skull0_peck.PNG', scream: 'assets/skull0_scream.PNG' },
@@ -116,3 +124,4 @@ const CONFIG = {
     peckDuration: 0.35, // segundos que se ve el sprite "ave picoteando" antes de pasar al grito + audio
   },
 };
+
