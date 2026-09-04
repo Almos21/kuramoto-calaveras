@@ -43,7 +43,7 @@ const CONFIG = {
 
   // ---------- MODELO DE KURAMOTO ----------
   kuramoto: {
-    K: 0.85,                // fuerza de acoplamiento global BASE — bajado de 1.6 para que tarde más en sincronizar
+    K: 1.1,                // fuerza de acoplamiento global BASE — bajado de 1.6 para que tarde más en sincronizar
     singerWeightMult: 2.2,  // cuánto más pesa el valor de la cantante θ_j cuando aparece en la ecuación de OTROS — bajado de 4.0
     distanceFalloff: 700,   // px (en el canvas ya escalado). Bajado de 700: el acoplamiento llega a menos distancia,
                              // así que el contagio entre calaveras lejanas es más lento.
