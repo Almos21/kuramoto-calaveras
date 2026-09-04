@@ -40,48 +40,6 @@ const CONFIG = {
   background: {
     image: 'assets/background.PNG', // se dibuja primero, detrás de la cantante y las calaveras
   },
-/*
-  CONFIG.js
-  ---------
-  Todo lo que necesitas editar para calzar tus sprites está aquí.
-  No toques sketch.js a menos que quieras cambiar la lógica del modelo.
-
-  IMPORTANTE sobre los sprites:
-  Como cada imagen es del tamaño completo de la ventana (con transparencia
-  alrededor del personaje dibujado), cada sprite se dibuja SIEMPRE en
-  (0,0) cubriendo todo el canvas — nunca se recorta ni se reposiciona.
-  Lo único que cambia entre personajes es el "collider" (la caja/círculo
-  invisible que usamos para detectar el mouse) y la posición lógica
-  "pos" que se usa solo para calcular distancias en el acoplamiento
-  de Kuramoto (qué tan cerca están un cráneo de otro / de la cantante).
-
-  Presiona la tecla "D" en la simulación para ver los colliders dibujados
-  encima y calibrarlos visualmente.
-
-  SOBRE RESOLUCIÓN Y ESCALA:
-  Tus sprites están hechos en 3840x2160 (4K). Dibujarlos así de grandes en
-  el navegador es innecesariamente pesado, así que el canvas real se
-  calcula como sourceW*scale x sourceH*scale (con scale=0.5 -> 1920x1080).
-  TODAS las posiciones y colliders de abajo se escriben en las coordenadas
-  ORIGINALES de 4K (las mismas que ves en tu editor de imagen/Photoshop) —
-  el código las reescala automáticamente, no tienes que hacer la cuenta tú.
-  Si quieres un canvas aún más liviano, baja "scale" (ej. 0.35).
-  Nota: escalar aquí reduce el tamaño de RENDER, no el peso de descarga de
-  los PNG — si el peso de la página (tiempo de carga) te importa, exporta
-  también versiones más livianas de los PNG/MP3 del lado de tu editor.
-*/
-
-const CONFIG = {
-
-  canvas: {
-    sourceW: 3840,   // ancho con el que exportaste tus sprites
-    sourceH: 2160,   // alto con el que exportaste tus sprites
-    scale: 0.5,      // factor de escala para el canvas real (0.5 -> 1920x1080)
-  },
-
-  background: {
-    image: 'assets/background.PNG', // se dibuja primero, detrás de la cantante y las calaveras
-  },
 
   // ---------- MODELO DE KURAMOTO ----------
   kuramoto: {
