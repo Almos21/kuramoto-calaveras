@@ -90,7 +90,7 @@ const CONFIG = {
       images: { normal: 'assets/skull1_normal.PNG', peck: 'assets/skull1_peck.PNG', scream: 'assets/skull1_scream.PNG' },
       audio: 'assets/skull1.mp3' },
 
-    { id: 2, pos: { x: 1260, y: 1560 }, collider: { x: 2096, y: 10, w: 374, h: 428 } ,
+    { id: 2, pos: { x: 1260, y: 1560 }, collider: { x: 2028, y: 18, w: 494, h: 422 } ,
       omegaBase: 0.45,
       images: { normal: 'assets/skull2_normal.PNG', peck: 'assets/skull2_peck.PNG', scream: 'assets/skull2_scream.PNG' },
       audio: 'assets/skull2.mp3' },
@@ -110,7 +110,7 @@ const CONFIG = {
       images: { normal: 'assets/skull5_normal.PNG', peck: 'assets/skull5_peck.PNG', scream: 'assets/skull5_scream.PNG' },
       audio: 'assets/skull5.mp3' },
 
-    { id: 6, pos: { x: 1920, y: 1860 }, collider: { x: 948, y: 12, w: 382, h: 470 },
+    { id: 6, pos: { x: 1920, y: 1860 }, collider: { x: 948, y: 12, w: 816, h: 428 },
       omegaBase: 1.75,
       images: { normal: 'assets/skull6_normal.PNG', peck: 'assets/skull6_peck.PNG', scream: 'assets/skull6_scream.PNG' },
       audio: 'assets/skull6.mp3' },
