@@ -109,7 +109,7 @@ function setup() {
   skulls = CONFIG.skulls.map((s) => ({
     id: s.id,
     theta: random(TWO_PI),
-    omega: s.omegaBase + random(-0.08, 0.08), // pequeño jitter para arrancar en caos, no en fase
+    omega: s.omegaBase + random(-0.3, 0.3), // jitter ampliado — arranca más disperso, más caos inicial
     phase: 'normal',       // 'normal' | 'peck' | 'scream'
     timer: 0,
     lapCount: 0,
