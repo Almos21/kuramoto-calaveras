@@ -33,6 +33,13 @@ let skulls = []; // estado de los 7 osciladores de calaveras
 let showDebug = false;
 let assetsOk = true;
 
+// Colliders "vivos" durante el modo de calibración (coordenadas de canvas,
+// se inicializan desde config.js y se editan con el mouse). Se convierten
+// de vuelta a coordenadas de 4K solo al exportar (tecla P).
+let working = null;
+let drag = null; // { target: 'singer'|skullId, mode: 'move'|'resize', ... }
+const HANDLE = 16; // tamaño del cuadrito de redimensionar, en px de canvas
+
 function preload() {
   // Si algún archivo no existe, p5 avisará en consola pero no debe romper
   // la simulación entera: seguimos igual, solo no se verá ese sprite.
@@ -72,6 +79,17 @@ function scaledRect(r) {
   return { x: r.x * S, y: r.y * S, w: r.w * S, h: r.h * S };
 }
 
+// Inversa de scaledRect: de coordenadas de canvas de vuelta a las
+// coordenadas de 4K que se escriben en config.js.
+function unscaledRect(r) {
+  const S = CONFIG.canvas.scale;
+  return { x: round(r.x / S), y: round(r.y / S), w: round(r.w / S), h: round(r.h / S) };
+}
+
+function getWorkingRect(target) {
+  return target === 'singer' ? working.singer : working.skulls[target];
+}
+
 function setup() {
   const S = CONFIG.canvas.scale;
   createCanvas(CONFIG.canvas.sourceW * S, CONFIG.canvas.sourceH * S);
@@ -92,6 +110,12 @@ function setup() {
     timer: 0,
     lapCount: 0,
   }));
+
+  // Copia editable de los colliders para el modo de calibración
+  working = {
+    singer: scaledRect(CONFIG.singer.collider),
+    skulls: CONFIG.skulls.map(s => scaledRect(s.collider)),
+  };
 }
 
 function draw() {
@@ -211,6 +235,10 @@ function keyPressed() {
     showDebug = !showDebug;
     return;
   }
+  if (showDebug && (key === 'p' || key === 'P')) {
+    printCalibration();
+    return;
+  }
   if (keyCode === UP_ARROW) {
     singer.omega = constrain(singer.omega + CONFIG.singer.omegaStep, CONFIG.singer.omegaMin, CONFIG.singer.omegaMax);
   } else if (keyCode === DOWN_ARROW) {
@@ -218,7 +246,25 @@ function keyPressed() {
   }
 }
 
+// Imprime en la consola del navegador (F12) los valores de collider
+// actuales, ya en coordenadas de 4K, listos para pegar en config.js.
+function printCalibration() {
+  const lines = [];
+  lines.push('--- Valores de collider (pega esto en config.js) ---');
+  const sc = unscaledRect(working.singer);
+  lines.push(`singer.collider: { x: ${sc.x}, y: ${sc.y}, w: ${sc.w}, h: ${sc.h} }`);
+  working.skulls.forEach((r, i) => {
+    const c = unscaledRect(r);
+    lines.push(`skulls[${i}].collider: { x: ${c.x}, y: ${c.y}, w: ${c.w}, h: ${c.h} }`);
+  });
+  console.log(lines.join('\n'));
+}
+
 function mousePressed() {
+  if (showDebug) {
+    startCalibrationDrag();
+    return;
+  }
   for (const s of skulls) {
     const c = scaledRect(CONFIG.skulls[s.id].collider);
     if (mouseX >= c.x && mouseX <= c.x + c.w && mouseY >= c.y && mouseY <= c.y + c.h) {
@@ -226,6 +272,40 @@ function mousePressed() {
       return; // solo una calavera por clic
     }
   }
+}
+
+function startCalibrationDrag() {
+  const targets = ['singer', ...skulls.map(s => s.id)];
+  for (const target of targets) {
+    const r = getWorkingRect(target);
+    // Zona de la esquina inferior derecha -> redimensionar
+    const hx = r.x + r.w, hy = r.y + r.h;
+    if (mouseX >= hx - HANDLE && mouseX <= hx + HANDLE / 2 && mouseY >= hy - HANDLE && mouseY <= hy + HANDLE / 2) {
+      drag = { target, mode: 'resize', startW: r.w, startH: r.h, startMouseX: mouseX, startMouseY: mouseY };
+      return;
+    }
+    // Cuerpo del rectángulo -> mover
+    if (mouseX >= r.x && mouseX <= r.x + r.w && mouseY >= r.y && mouseY <= r.y + r.h) {
+      drag = { target, mode: 'move', offsetX: mouseX - r.x, offsetY: mouseY - r.y };
+      return;
+    }
+  }
+}
+
+function mouseDragged() {
+  if (!showDebug || !drag) return;
+  const r = getWorkingRect(drag.target);
+  if (drag.mode === 'move') {
+    r.x = mouseX - drag.offsetX;
+    r.y = mouseY - drag.offsetY;
+  } else if (drag.mode === 'resize') {
+    r.w = max(10, drag.startW + (mouseX - drag.startMouseX));
+    r.h = max(10, drag.startH + (mouseY - drag.startMouseY));
+  }
+}
+
+function mouseReleased() {
+  drag = null;
 }
 
 function scareSkull(s) {
@@ -272,26 +352,35 @@ function drawSkulls() {
 }
 
 function drawDebug() {
-  noFill();
-  strokeWeight(2);
+  textSize(13);
 
-  stroke(0, 200, 255);
-  const sc = scaledRect(CONFIG.singer.collider);
-  rect(sc.x, sc.y, sc.w, sc.h);
-  fill(0, 200, 255);
+  drawCalibBox(working.singer, [0, 200, 255], 'cantante');
+  skulls.forEach((s, i) => {
+    drawCalibBox(working.skulls[i], [255, 80, 80], `#${s.id}`);
+  });
+
+  fill(255);
   noStroke();
-  text(`cantante  ω=${singer.omega.toFixed(2)}  θ=${(singer.theta % TWO_PI).toFixed(2)}  [${singer.phase}]`, sc.x, sc.y - 6);
+  textSize(13);
+  text('Modo calibración: arrastra el cuerpo para mover, la esquina inferior-derecha para redimensionar. P = imprimir valores en consola.', 12, height - 16);
+}
 
-  for (const s of skulls) {
-    const c = scaledRect(CONFIG.skulls[s.id].collider);
-    noFill();
-    stroke(255, 80, 80);
-    strokeWeight(2);
-    rect(c.x, c.y, c.w, c.h);
-    noStroke();
-    fill(255, 80, 80);
-    text(`#${s.id} θ=${(s.theta % TWO_PI).toFixed(2)} [${s.phase}]`, c.x, c.y - 6);
-  }
+function drawCalibBox(r, col, label) {
+  noFill();
+  stroke(col[0], col[1], col[2]);
+  strokeWeight(2);
+  rect(r.x, r.y, r.w, r.h);
+
+  // Handle de redimensionar (esquina inferior derecha)
+  fill(col[0], col[1], col[2]);
+  noStroke();
+  rect(r.x + r.w - HANDLE / 2, r.y + r.h - HANDLE / 2, HANDLE, HANDLE);
+
+  // Valores en coordenadas de 4K (las que van en config.js)
+  const c = unscaledRect(r);
+  fill(col[0], col[1], col[2]);
+  noStroke();
+  text(`${label}  x:${c.x} y:${c.y} w:${c.w} h:${c.h}`, r.x, r.y - 6);
 }
 
 function drawAssetWarning() {
