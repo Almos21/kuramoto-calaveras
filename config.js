@@ -124,4 +124,3 @@ skulls: [
     peckDuration: 0.35, // segundos que se ve el sprite "ave picoteando" antes de pasar al grito + audio
   },
 };
-
