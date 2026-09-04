@@ -48,8 +48,8 @@ const CONFIG = {
     distanceFalloff: 700,   // px (en el canvas ya escalado). Mayor = el acoplamiento por distancia decae más lento.
                              // Nota: al cambiar "scale" cambia el tamaño real del canvas, así que si el efecto
                              // de "cercanía" se siente muy fuerte o muy débil, ajusta este valor.
-    scarePerturbMin: PI * 0.9,  // al asustar un cráneo (clic), cuánto se perturba su fase como mínimo
-    scarePerturbMax: PI * 2.0,  // y como máximo (empuja al cráneo de vuelta a un estado caótico)
+    scarePerturbMin: Math.PI * 0.9,  // al asustar un cráneo (clic), cuánto se perturba su fase como mínimo
+    scarePerturbMax: Math.PI * 2.0,  // y como máximo (empuja al cráneo de vuelta a un estado caótico)
   },
 
   // ---------- CANTANTE (rige el tiempo) ----------
