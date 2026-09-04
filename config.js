@@ -90,12 +90,12 @@ const CONFIG = {
       images: { normal: 'assets/skull1_normal.PNG', peck: 'assets/skull1_peck.PNG', scream: 'assets/skull1_scream.PNG' },
       audio: 'assets/skull1.mp3' },
 
-    { id: 2, pos: { x: 1260, y: 1560 }, collider: { x: 2096, y: 10, w: 374, h: 428 ,
+    { id: 2, pos: { x: 1260, y: 1560 }, collider: { x: 2096, y: 10, w: 374, h: 428 } ,
       omegaBase: 0.45,
       images: { normal: 'assets/skull2_normal.PNG', peck: 'assets/skull2_peck.PNG', scream: 'assets/skull2_scream.PNG' },
       audio: 'assets/skull2.mp3' },
 
-    { id: 3, pos: { x: 2580, y: 1560 }, collider: { x: 2944, y: 1454, w: 752, h: 434 ,
+    { id: 3, pos: { x: 2580, y: 1560 }, collider: { x: 2944, y: 1454, w: 752, h: 434 } ,
       omegaBase: 1.55,
       images: { normal: 'assets/skull3_normal.PNG', peck: 'assets/skull3_peck.PNG', scream: 'assets/skull3_scream.PNG' },
       audio: 'assets/skull3.mp3' },
