@@ -38,7 +38,7 @@ const CONFIG = {
   },
 
   background: {
-    image: 'assets/background.png', // se dibuja primero, detrás de la cantante y las calaveras
+    image: 'assets/background.PNG', // se dibuja primero, detrás de la cantante y las calaveras
   },
 
   // ---------- MODELO DE KURAMOTO ----------
@@ -61,8 +61,8 @@ const CONFIG = {
     pos: { x: 1920, y: 1080 }, // posición lógica (para distancias), EN COORDENADAS DE 4K
     collider: { x: 1680, y: 630, w: 480, h: 1260 }, // EDITA esto para calzar tu sprite, EN COORDENADAS DE 4K
     images: {
-      quieta:   'assets/singer_quieta.png',
-      cantando: 'assets/singer_cantando.png',
+      quieta:   'assets/singer_quieta.PNG',
+      cantando: 'assets/singer_cantando.PNG',
     },
     audio: 'assets/singer.mp3',
   },
@@ -75,37 +75,37 @@ const CONFIG = {
   skulls: [
     { id: 0, pos: { x: 360, y: 900 }, collider: { x: 180, y: 690, w: 390, h: 480 },
       omegaBase: 0.75,
-      images: { normal: 'assets/skull0_normal.png', peck: 'assets/skull0_peck.png', scream: 'assets/skull0_scream.png' },
+      images: { normal: 'assets/skull0_normal.PNG', peck: 'assets/skull0_peck.PNG', scream: 'assets/skull0_scream.PNG' },
       audio: 'assets/skull0.mp3' },
 
     { id: 1, pos: { x: 810, y: 1260 }, collider: { x: 630, y: 1050, w: 390, h: 480 },
       omegaBase: 0.85,
-      images: { normal: 'assets/skull1_normal.png', peck: 'assets/skull1_peck.png', scream: 'assets/skull1_scream.png' },
+      images: { normal: 'assets/skull1_normal.PNG', peck: 'assets/skull1_peck.PNG', scream: 'assets/skull1_scream.PNG' },
       audio: 'assets/skull1.mp3' },
 
     { id: 2, pos: { x: 1260, y: 1560 }, collider: { x: 1080, y: 1350, w: 390, h: 480 },
       omegaBase: 0.70,
-      images: { normal: 'assets/skull2_normal.png', peck: 'assets/skull2_peck.png', scream: 'assets/skull2_scream.png' },
+      images: { normal: 'assets/skull2_normal.PNG', peck: 'assets/skull2_peck.PNG', scream: 'assets/skull2_scream.PNG' },
       audio: 'assets/skull2.mp3' },
 
     { id: 3, pos: { x: 2580, y: 1560 }, collider: { x: 2400, y: 1350, w: 390, h: 480 },
       omegaBase: 0.95,
-      images: { normal: 'assets/skull3_normal.png', peck: 'assets/skull3_peck.png', scream: 'assets/skull3_scream.png' },
+      images: { normal: 'assets/skull3_normal.PNG', peck: 'assets/skull3_peck.PNG', scream: 'assets/skull3_scream.PNG' },
       audio: 'assets/skull3.mp3' },
 
     { id: 4, pos: { x: 3030, y: 1260 }, collider: { x: 2850, y: 1050, w: 390, h: 480 },
       omegaBase: 0.80,
-      images: { normal: 'assets/skull4_normal.png', peck: 'assets/skull4_peck.png', scream: 'assets/skull4_scream.png' },
+      images: { normal: 'assets/skull4_normal.PNG', peck: 'assets/skull4_peck.PNG', scream: 'assets/skull4_scream.PNG' },
       audio: 'assets/skull4.mp3' },
 
     { id: 5, pos: { x: 3480, y: 900 }, collider: { x: 3300, y: 690, w: 390, h: 480 },
       omegaBase: 0.90,
-      images: { normal: 'assets/skull5_normal.png', peck: 'assets/skull5_peck.png', scream: 'assets/skull5_scream.png' },
+      images: { normal: 'assets/skull5_normal.PNG', peck: 'assets/skull5_peck.PNG', scream: 'assets/skull5_scream.PNG' },
       audio: 'assets/skull5.mp3' },
 
     { id: 6, pos: { x: 1920, y: 1860 }, collider: { x: 1740, y: 1650, w: 390, h: 480 },
       omegaBase: 1.05,
-      images: { normal: 'assets/skull6_normal.png', peck: 'assets/skull6_peck.png', scream: 'assets/skull6_scream.png' },
+      images: { normal: 'assets/skull6_normal.PNG', peck: 'assets/skull6_peck.PNG', scream: 'assets/skull6_scream.PNG' },
       audio: 'assets/skull6.mp3' },
   ],
 
