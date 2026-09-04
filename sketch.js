@@ -33,6 +33,10 @@ let skulls = []; // estado de los 7 osciladores de calaveras
 let showDebug = false;
 let assetsOk = true;
 
+// K dinámico: cuánto se le resta al K base ahora mismo. Sube de golpe con
+// cada susto y decae solo con el tiempo (ver stepKuramoto).
+let kDeficit = 0;
+
 // Colliders "vivos" durante el modo de calibración (coordenadas de canvas,
 // se inicializan desde config.js y se editan con el mouse). Se convierten
 // de vuelta a coordenadas de 4K solo al exportar (tecla P).
@@ -143,12 +147,19 @@ function couplingWeight(sourceIsSinger, dist) {
   return base * falloff;
 }
 
+// K_efectivo(t) = max(scareKMin, K_base - kDeficit). kDeficit se alimenta
+// en scareSkull() y decae solo cada frame (ver el final de stepKuramoto).
+function currentK() {
+  return max(CONFIG.kuramoto.scareKMin, CONFIG.kuramoto.K - kDeficit);
+}
+
 function stepKuramoto(dt) {
   // Armamos un arreglo homogéneo: índice 0 = cantante, 1..7 = calaveras
   const n = 1 + skulls.length;
   const theta = [singer.theta, ...skulls.map(s => s.theta)];
   const omega = [singer.omega, ...skulls.map(s => s.omega)];
   const pos = [scaledPoint(CONFIG.singer.pos), ...CONFIG.skulls.map(s => scaledPoint(s.pos))];
+  const K = currentK();
 
   const dtheta = new Array(n).fill(0);
 
@@ -160,7 +171,7 @@ function stepKuramoto(dt) {
       const w = couplingWeight(j === 0 /* fuente es la cantante */, d);
       sum += w * sin(theta[j] - theta[i]);
     }
-    dtheta[i] = omega[i] + (CONFIG.kuramoto.K / (n - 1)) * sum;
+    dtheta[i] = omega[i] + (K / (n - 1)) * sum;
   }
 
   // Aplicamos y detectamos "vueltas" (laps) completas -> disparan eventos
@@ -177,6 +188,9 @@ function stepKuramoto(dt) {
       onSkullLap(s);
     }
   });
+
+  // kDeficit decae exponencialmente hacia 0 -> K se va recuperando solo
+  kDeficit *= exp(-dt / CONFIG.kuramoto.scareKRecoveryTau);
 }
 
 // ---------------------------------------------------------------------
@@ -325,6 +339,12 @@ function scareSkull(s) {
   // deshaciendo el progreso de sincronización que tenía con sus vecinas.
   const sign = random() < 0.5 ? -1 : 1;
   s.theta += sign * random(CONFIG.kuramoto.scarePerturbMin, CONFIG.kuramoto.scarePerturbMax);
+
+  // Además, el susto le resta al K GLOBAL del sistema (no solo a esta
+  // calavera): todo el sistema se sincroniza menos por un rato, y se va
+  // recuperando solo (ver el decaimiento de kDeficit en stepKuramoto).
+  const maxDeficit = CONFIG.kuramoto.K - CONFIG.kuramoto.scareKMin;
+  kDeficit = min(kDeficit + CONFIG.kuramoto.scareKDrop, maxDeficit);
 }
 
 // ---------------------------------------------------------------------
@@ -353,6 +373,10 @@ function drawSkulls() {
 
 function drawDebug() {
   textSize(13);
+
+  fill(255, 220, 80);
+  noStroke();
+  text(`K_efectivo = ${currentK().toFixed(2)}  (base ${CONFIG.kuramoto.K.toFixed(2)}, déficit ${kDeficit.toFixed(2)})`, 12, 20);
 
   drawCalibBox(working.singer, [0, 200, 255], 'cantante');
   skulls.forEach((s, i) => {
