@@ -44,8 +44,8 @@ const CONFIG = {
   // ---------- MODELO DE KURAMOTO ----------
   kuramoto: {
     K: 1.6,                // fuerza de acoplamiento global BASE — bajado de 1.6 para que tarde más en sincronizar
-    singerWeightMult: 2.2,  // cuánto más pesa el valor de la cantante θ_j cuando aparece en la ecuación de OTROS — bajado de 4.0
-    distanceFalloff: 700,   // px (en el canvas ya escalado). Bajado de 700: el acoplamiento llega a menos distancia,
+    singerWeightMult: 3,  // cuánto más pesa el valor de la cantante θ_j cuando aparece en la ecuación de OTROS — bajado de 4.0
+    distanceFalloff: 1500,   // px (en el canvas ya escalado). Bajado de 700: el acoplamiento llega a menos distancia,
                              // así que el contagio entre calaveras lejanas es más lento.
     scarePerturbMin: Math.PI * 0.9,  // al asustar un cráneo (clic), cuánto se perturba su fase como mínimo
     scarePerturbMax: Math.PI * 2.0,  // y como máximo (empuja al cráneo de vuelta a un estado caótico)
