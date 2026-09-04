@@ -153,6 +153,22 @@ function currentK() {
   return max(CONFIG.kuramoto.scareKMin, CONFIG.kuramoto.K - kDeficit);
 }
 
+// Parámetro de orden de Kuramoto: r = |promedio vectorial de e^(iθ)|.
+// r=0 -> completamente desincronizado. r=1 -> coherencia perfecta.
+// Esta es la forma estándar de medir "qué tan sincronizado" está el
+// sistema — no hace falta que las fases sean idénticas para que r suba,
+// solo que dejen de estar repartidas uniformemente alrededor del círculo.
+function orderParameter() {
+  const thetas = [singer.theta, ...skulls.map(s => s.theta)];
+  let sumCos = 0, sumSin = 0;
+  for (const t of thetas) {
+    sumCos += cos(t);
+    sumSin += sin(t);
+  }
+  const n = thetas.length;
+  return dist(0, 0, sumCos / n, sumSin / n);
+}
+
 function stepKuramoto(dt) {
   // Armamos un arreglo homogéneo: índice 0 = cantante, 1..7 = calaveras
   const n = 1 + skulls.length;
@@ -377,6 +393,7 @@ function drawDebug() {
   fill(255, 220, 80);
   noStroke();
   text(`K_efectivo = ${currentK().toFixed(2)}  (base ${CONFIG.kuramoto.K.toFixed(2)}, déficit ${kDeficit.toFixed(2)})`, 12, 20);
+  text(`coherencia r = ${orderParameter().toFixed(3)}  (0 = caos, 1 = sincronía perfecta)`, 12, 40);
 
   drawCalibBox(working.singer, [0, 200, 255], 'cantante');
   skulls.forEach((s, i) => {
