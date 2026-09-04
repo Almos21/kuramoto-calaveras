@@ -20,6 +20,8 @@ kuramoto-calaveras/
 Copia tus sprites y audios reales dentro de `assets/` con esos nombres,
 o cambia las rutas en `config.js` si prefieres otros nombres.
 
+e
+
 Nota: pediste "ocho calaveras" en la descripción general pero luego
 detallaste la interacción para 7, así que dejé el arreglo `CONFIG.skulls`
 con 7 entradas (es lo que encaja con el resto de la mecánica que
