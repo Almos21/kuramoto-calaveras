@@ -66,7 +66,7 @@ const CONFIG = {
     omegaMin: 0.15,
     omegaMax: 4.0,
     pos: { x: 1920, y: 1080 }, // posición lógica (para distancias), EN COORDENADAS DE 4K
-    collider: { x: 1680, y: 630, w: 480, h: 1260 }, // EDITA esto para calzar tu sprite, EN COORDENADAS DE 4K
+    collider: { x: 1680, y: 510, w: 758, h: 1264 }, // EDITA esto para calzar tu sprite, EN COORDENADAS DE 4K
     images: {
       quieta:   'assets/singer_quieta.PNG',
       cantando: 'assets/singer_cantando.PNG',
