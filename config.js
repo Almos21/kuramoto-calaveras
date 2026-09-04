@@ -59,7 +59,7 @@ const CONFIG = {
     omegaMin: 0.15,
     omegaMax: 4.0,
     pos: { x: 1920, y: 1080 }, // posición lógica (para distancias), EN COORDENADAS DE 4K
-    collider: { x: 1680, y: 630, w: 480, h: 1260 }, // EDITA esto para calzar tu sprite, EN COORDENADAS DE 4K
+    collider: { x: 1678, y: 552, w: 742, h: 1160 }, // EDITA esto para calzar tu sprite, EN COORDENADAS DE 4K
     images: {
       quieta:   'assets/singer_quieta.PNG',
       cantando: 'assets/singer_cantando.PNG',
@@ -73,37 +73,37 @@ const CONFIG = {
   // "collider" = caja de detección de clic, EDITA x/y/w/h para calzar tu arte.
   // Todos los valores están en coordenadas de 4K (3840x2160), igual que tus sprites.
   skulls: [
-    { id: 0, pos: { x: 360, y: 900 }, collider: { x: 180, y: 690, w: 390, h: 480 },
+    { id: 0, pos: { x: 360, y: 900 }, collider: { x: 2726, y: 46, w: 402, h: 408 },
       omegaBase: 0.75,
       images: { normal: 'assets/skull0_normal.PNG', peck: 'assets/skull0_peck.PNG', scream: 'assets/skull0_scream.PNG' },
       audio: 'assets/skull0.mp3' },
 
-    { id: 1, pos: { x: 810, y: 1260 }, collider: { x: 630, y: 1050, w: 390, h: 480 },
+    { id: 1, pos: { x: 810, y: 1260 }, collider: { x: 3366, y: 528, w: 440, h: 496 },
       omegaBase: 0.85,
       images: { normal: 'assets/skull1_normal.PNG', peck: 'assets/skull1_peck.PNG', scream: 'assets/skull1_scream.PNG' },
       audio: 'assets/skull1.mp3' },
 
-    { id: 2, pos: { x: 1260, y: 1560 }, collider: { x: 1080, y: 1350, w: 390, h: 480 },
+    { id: 2, pos: { x: 1260, y: 1560 }, collider: { x: 2096, y: 10, w: 374, h: 428 },
       omegaBase: 0.70,
       images: { normal: 'assets/skull2_normal.PNG', peck: 'assets/skull2_peck.PNG', scream: 'assets/skull2_scream.PNG' },
       audio: 'assets/skull2.mp3' },
 
-    { id: 3, pos: { x: 2580, y: 1560 }, collider: { x: 2400, y: 1350, w: 390, h: 480 },
+    { id: 3, pos: { x: 2580, y: 1560 }, collider: { x: 2944, y: 1454, w: 752, h: 434 },
       omegaBase: 0.95,
       images: { normal: 'assets/skull3_normal.PNG', peck: 'assets/skull3_peck.PNG', scream: 'assets/skull3_scream.PNG' },
       audio: 'assets/skull3.mp3' },
 
-    { id: 4, pos: { x: 3030, y: 1260 }, collider: { x: 2850, y: 1050, w: 390, h: 480 },
+    { id: 4, pos: { x: 3030, y: 1260 }, collider: { x: 742, y: 1088, w: 372, h: 450 },
       omegaBase: 0.80,
       images: { normal: 'assets/skull4_normal.PNG', peck: 'assets/skull4_peck.PNG', scream: 'assets/skull4_scream.PNG' },
       audio: 'assets/skull4.mp3' },
 
-    { id: 5, pos: { x: 3480, y: 900 }, collider: { x: 3300, y: 690, w: 390, h: 480 },
+    { id: 5, pos: { x: 3480, y: 900 }, collider: { x: 344, y: 690, w: 386, h: 400 },
       omegaBase: 0.90,
       images: { normal: 'assets/skull5_normal.PNG', peck: 'assets/skull5_peck.PNG', scream: 'assets/skull5_scream.PNG' },
       audio: 'assets/skull5.mp3' },
 
-    { id: 6, pos: { x: 1920, y: 1860 }, collider: { x: 1740, y: 1650, w: 390, h: 480 },
+    { id: 6, pos: { x: 1920, y: 1860 }, collider: { x: 948, y: 12, w: 382, h: 470 },
       omegaBase: 1.05,
       images: { normal: 'assets/skull6_normal.PNG', peck: 'assets/skull6_peck.PNG', scream: 'assets/skull6_scream.PNG' },
       audio: 'assets/skull6.mp3' },
